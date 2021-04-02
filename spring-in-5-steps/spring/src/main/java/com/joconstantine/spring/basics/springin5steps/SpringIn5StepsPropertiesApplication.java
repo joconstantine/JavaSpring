@@ -1,15 +1,16 @@
 package com.joconstantine.spring.basics.springin5steps;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
-import com.joconstantine.spring.basics.springin5steps.basic.BinarySearchImpl;
+import com.joconstantine.spring.basics.springin5steps.properties.SomeExternalService;
 
 @Configuration
 @ComponentScan
-public class SpringIn5StepsBasicApplication {
+@PropertySource("classpath:app.properties")
+public class SpringIn5StepsPropertiesApplication {
 
 	public static void main(String[] args) {
 		//BinarySearchImpl binarySearch = 
@@ -19,17 +20,11 @@ public class SpringIn5StepsBasicApplication {
 				new AnnotationConfigApplicationContext(SpringIn5StepsBasicApplication.class)){
 			//SpringApplication.run(SpringIn5StepsBasicApplication.class, args);
 
-			BinarySearchImpl binarySearch = 
-					applicationContext.getBean(BinarySearchImpl.class);
+			SomeExternalService service = 
+					applicationContext.getBean(SomeExternalService.class);
 
-			BinarySearchImpl binarySearch1 = 
-					applicationContext.getBean(BinarySearchImpl.class);
-
-			System.out.println(binarySearch);
-			System.out.println(binarySearch1);
-
-			int result = binarySearch.binarySearch(new int[] {124,  6}, 3);
-			System.out.println(result);
+			System.out.println(service);
+			System.out.println(service.returnServiceURL());
 		}
 	}
 
