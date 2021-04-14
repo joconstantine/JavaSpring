@@ -1,25 +1,44 @@
 package com.in28minutes.jpa.hibernate.demo.entity;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name = "course")
+@NamedQueries(
+		value = {
+				@NamedQuery(name="query_get_all_courses", query="select c From Course c"),
+				@NamedQuery(name="query_get_100_Step_courses",
+				query="Select c From Course c where name like '%100 steps'")
+		})
 public class Course {
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(nullable=false)
 	private String name;
+	
+	@UpdateTimestamp
+	private LocalDateTime lastUpdatedDate;
+	
+	@CreationTimestamp
+	private LocalDateTime createdDate;
 	
 	protected Course() {}
 	
 	public Course(String name) {
-		
+		this.name = name;
 	}
 
 	public String getName() {
