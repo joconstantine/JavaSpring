@@ -1,10 +1,13 @@
 package com.in28minutes.jpa.hibernate.demo.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "course")
 public class Course {
 	
 	@Id
@@ -29,5 +32,10 @@ public class Course {
 
 	public Long getId() {
 		return id;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Course [%s]", name);
 	}
 }
