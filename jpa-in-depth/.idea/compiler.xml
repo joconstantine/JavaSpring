@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,10 +10,8 @@
         <module name="spring-boot-ecommerce" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="demo" target="11" />
-      <module name="spring-boot-ecommerce" target="16" />
-      <module name="wrapper" target="1.5" />
+    <bytecodeTargetLevel target="16">
+      <module name="spring-boot-ecommerce" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

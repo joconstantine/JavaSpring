@@ -3,6 +3,8 @@ package com.in28minutes.jpa.hibernate.demo.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -49,6 +51,12 @@ class CourseRepositoryTests {
 	@DirtiesContext
 	void playWithEntityManager() {
 		repository.playWithEntityManager();
+	}
+	
+	@Test
+	void retrieveReviewsForCourse() {
+		Course course = repository.findById(10001L);
+		logger.info("{}", course.getReviews());
 	}
 
 }

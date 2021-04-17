@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
+import com.in28minutes.jpa.hibernate.demo.entity.Review;
 
 @Repository
 @Transactional
@@ -55,5 +56,33 @@ public class CourseRepository {
 		course2.setName("JPA in 50 steps - Updated");
 		
 		em.flush();
+	}
+	
+	public void addReviewsForCourse() {
+		Course course = findById(10003L);
+		logger.info("course.getReviews() ->{}", course.getReviews());
+		
+		Review review1 = new Review("5", "Great hands-on Stuff.");
+		Review review2 = new Review("5", "Hatsoff.");
+		
+		course.addReview(review1);
+		review1.setCourse(course);
+		
+		course.addReview(review2);
+		review2.setCourse(course);
+				
+		em.persist(review1);
+		em.persist(review2);
+	}
+	
+	public void addReviewsForCourse(Long courseId, List<Review> reviews) {
+		Course course = findById(courseId);
+		logger.info("course.getReviews() -> {}", course.getReviews());
+		
+		for (Review review: reviews) {
+			course.addReview(review);
+			review.setCourse(course);
+			em.persist(review);
+		}
 	}
 }

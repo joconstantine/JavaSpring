@@ -1,17 +1,18 @@
 package com.in28minutes.jpa.hibernate.demo.entity;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries(
@@ -29,12 +30,12 @@ public class Course {
 	@Column(nullable=false)
 	private String name;
 	
-	@UpdateTimestamp
-	private LocalDateTime lastUpdatedDate;
+	@OneToMany(mappedBy="course", fetch=FetchType.EAGER)
+	private List<Review> reviews = new ArrayList<Review>();
 	
-	@CreationTimestamp
-	private LocalDateTime createdDate;
-	
+	@ManyToMany(mappedBy="courses")
+	private List<Student> students = new ArrayList<Student>();
+		
 	protected Course() {}
 	
 	public Course(String name) {
@@ -51,6 +52,26 @@ public class Course {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public List<Review> getReviews() {
+		return reviews;
+	}
+	
+	public void addReview(Review review) {
+		this.reviews.add(review);
+	}
+	
+	public void removeReview(Review review) {
+		this.reviews.remove(review);
+	}
+	
+	public List<Student> getStudents() {
+		return students;
+	}
+	
+	public void addStudent(Student student) {
+		this.students.add(student);
 	}
 
 	@Override
