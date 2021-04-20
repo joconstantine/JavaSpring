@@ -30,6 +30,17 @@ class CourseRepositoryTests {
 		Course course = repository.findById(10001L);
 		assertEquals("JPA in 50 steps", course.getName());
 	}
+	
+	@Test
+	@Transactional
+	void findById_basic_firstLevelCacheDemo() {
+		Course course = repository.findById(10001L);
+		logger.info("First Course Retrieve -> {}", course);
+		
+		assertEquals("JPA in 50 steps", course.getName());
+		Course course1 = repository.findById(10001L);
+		logger.info("First Course Retrieve -> {}", course1);
+	}
 
 	@DirtiesContext
 	void deleteById_basic() {
@@ -47,13 +58,11 @@ class CourseRepositoryTests {
 		assertEquals("Microservices in 100 steps", course.getName());
 	}
 	
-	@Test
 	@DirtiesContext
 	void playWithEntityManager() {
 		repository.playWithEntityManager();
 	}
 	
-	@Test
 	void retrieveReviewsForCourse() {
 		Course course = repository.findById(10001L);
 		logger.info("{}", course.getReviews());
