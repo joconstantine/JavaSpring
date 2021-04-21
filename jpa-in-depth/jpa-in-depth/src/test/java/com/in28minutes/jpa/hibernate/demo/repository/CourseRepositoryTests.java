@@ -3,7 +3,7 @@ package com.in28minutes.jpa.hibernate.demo.repository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import javax.transaction.Transactional;
+import javax.persistence.EntityManager;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,9 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.in28minutes.jpa.hibernate.demo.DemoApplication;
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
+import com.in28minutes.jpa.hibernate.demo.entity.Review;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes=DemoApplication.class)
@@ -25,6 +28,9 @@ class CourseRepositoryTests {
 	
 	@Autowired
 	CourseRepository repository;
+	
+	@Autowired
+	EntityManager em;
 
 	void findById_basic() {
 		Course course = repository.findById(10001L);
@@ -57,6 +63,13 @@ class CourseRepositoryTests {
 	void retrieveReviewsForCourse() {
 		Course course = repository.findById(10001L);
 		logger.info("{}", course.getReviews());
+	}
+	
+	@Test
+	@Transactional(isolation=Isolation.READ_UNCOMMITTED)
+	void retrieveCourseForReview() {
+		Review review = em.find(Review.class, 50001L);
+		logger.info("{}", review.getCourse());
 	}
 
 }

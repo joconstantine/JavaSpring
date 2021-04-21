@@ -14,6 +14,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @NamedQueries(
 		value = {
@@ -34,6 +36,7 @@ public class Course {
 	private List<Review> reviews = new ArrayList<Review>();
 	
 	@ManyToMany(mappedBy="courses")
+	@JsonIgnore
 	private List<Student> students = new ArrayList<Student>();
 		
 	protected Course() {}
