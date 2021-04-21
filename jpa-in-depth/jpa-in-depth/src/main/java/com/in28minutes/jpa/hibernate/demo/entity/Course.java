@@ -3,6 +3,7 @@ package com.in28minutes.jpa.hibernate.demo.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 				@NamedQuery(name="query_get_100_Step_courses",
 				query="Select c From Course c where name like '%100 steps'")
 		})
+@Cacheable
 public class Course {
 	
 	@Id
