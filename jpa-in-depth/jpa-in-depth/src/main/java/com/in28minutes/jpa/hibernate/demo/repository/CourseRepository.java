@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Review;
+import com.in28minutes.jpa.hibernate.demo.entity.ReviewRating;
 
 @Repository
 @Transactional
@@ -23,7 +24,10 @@ public class CourseRepository {
 	EntityManager em;	
 	
 	public Course findById(Long id) {
-		return em.find(Course.class, id);
+		Course course =  em.find(Course.class, id);
+		logger.info("Course -> {}", course);
+		
+		return course;
 	}
 	
 	public List<Course> findAllCourses() {
@@ -62,8 +66,8 @@ public class CourseRepository {
 		Course course = findById(10003L);
 		logger.info("course.getReviews() ->{}", course.getReviews());
 		
-		Review review1 = new Review("5", "Great hands-on Stuff.");
-		Review review2 = new Review("5", "Hatsoff.");
+		Review review1 = new Review(ReviewRating.FIVE, "Great hands-on Stuff.");
+		Review review2 = new Review(ReviewRating.FIVE, "Hatsoff.");
 		
 		course.addReview(review1);
 		review1.setCourse(course);

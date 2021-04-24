@@ -14,6 +14,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
+
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,10 +28,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 		value = {
 				@NamedQuery(name="query_get_all_courses", query="select c From Course c"),
 				@NamedQuery(name="query_get_100_Step_courses",
-				query="Select c From Course c where name like '%100 steps'")
+					query="Select c From Course c where name like '%100 steps'"),
+				@NamedQuery(name="query_get_all_courses_join_fetch", 
+					query="select c From Course c LEFT JOIN FETCH c.students s"),
 		})
 @Cacheable
+@SQLDelete(sql = "update course set is_deleted = true where id = ?")
+@Where(clause = "is_deleted = false")
 public class Course {
+	
+	private static Logger LOGGER = LoggerFactory.getLogger(Course.class);
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,13 +46,21 @@ public class Course {
 	@Column(nullable=false)
 	private String name;
 	
-	@OneToMany(mappedBy="course", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="course", fetch=FetchType.LAZY)
 	private List<Review> reviews = new ArrayList<Review>();
 	
 	@ManyToMany(mappedBy="courses")
 	@JsonIgnore
 	private List<Student> students = new ArrayList<Student>();
-		
+	
+	private boolean isDeleted;
+	
+	@PreRemove
+	private void preRemove() {
+		LOGGER.info("Setting isDeleted to True");
+		this.isDeleted = true;
+	}
+	
 	protected Course() {}
 	
 	public Course(String name) {
@@ -82,5 +102,13 @@ public class Course {
 	@Override
 	public String toString() {
 		return String.format("Course [%s]", name);
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 }

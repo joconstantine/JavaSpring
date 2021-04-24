@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.in28minutes.jpa.hibernate.demo.DemoApplication;
 import com.in28minutes.jpa.hibernate.demo.entity.Course;
 import com.in28minutes.jpa.hibernate.demo.entity.Review;
+import com.in28minutes.jpa.hibernate.demo.entity.ReviewRating;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes=DemoApplication.class)
@@ -31,13 +31,13 @@ class CourseRepositoryTests {
 	
 	@Autowired
 	EntityManager em;
-
-	void findById_basic() {
-		Course course = repository.findById(10001L);
-		assertEquals("JPA in 50 steps", course.getName());
-	}
 	
 	@Test
+	void findById_basic() {
+		Course course = repository.findById(10001L);
+		assertEquals("JPA in 50 Steps", course.getName());
+	}
+	
 	@Transactional
 	void findById_basic_firstLevelCacheDemo() {
 		Course course = repository.findById(10001L);
@@ -47,24 +47,22 @@ class CourseRepositoryTests {
 		Course course1 = repository.findById(10001L);
 		logger.info("First Course Retrieve -> {}", course1);
 	}
-
-	@DirtiesContext
+	
+	@Test
 	void deleteById_basic() {
 		Course course = repository.findById(10002L);
-		assertEquals("Spring in 50 steps", course.getName());
+		assertEquals("Spring in 50 Steps", course.getName());
 		repository.deleteById(10002L);
 		course = repository.findById(10002L);
 		assertNull(course);
 	}
 	
-	@DirtiesContext
 	void save_basic() {
 		repository.save(new Course("Microservices in 100 steps"));
 		Course course = repository.findById(1L);
 		assertEquals("Microservices in 100 steps", course.getName());
 	}
 	
-	@DirtiesContext
 	void playWithEntityManager() {
 		repository.playWithEntityManager();
 	}
@@ -74,11 +72,24 @@ class CourseRepositoryTests {
 		logger.info("{}", course.getReviews());
 	}
 	
-	@Test
 	@Transactional(isolation=Isolation.READ_UNCOMMITTED)
 	void retrieveCourseForReview() {
 		Review review = em.find(Review.class, 50001L);
 		logger.info("{}", review.getCourse());
 	}
+	
+	@Test
+	@Transactional
+	void addReviewToCourse() {
+		Course course = repository.findById(10002L);
+		assertEquals("Spring in 50 Steps", course.getName());
+		Review review = new Review(ReviewRating.THREE, "This is so so");
+		course.addReview(review);
+		review.setCourse(course);
+		em.persist(course);		
+		em.persist(review);
+		em.flush();
+	}
 
 }
+

@@ -27,6 +27,7 @@ class NativeQueriesTest {
 	@Autowired
 	EntityManager em;
 	
+	@Test
 	void native_queries_basic() {
 		Query createQuery = em.createNativeQuery("Select * From Course", Course.class);
 		List<Course> resultList = createQuery.getResultList();
