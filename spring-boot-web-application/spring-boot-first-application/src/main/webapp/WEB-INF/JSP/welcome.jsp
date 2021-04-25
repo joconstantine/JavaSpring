@@ -1,11 +1,8 @@
-<html>
+<%@ include file="common/header.jspf"%>
+<%@ include file="common/navigation.jspf"%>
 
-<head>
-<title>First Web Application</title>
-</head>
-
-<body>
+<div class="container">
 	Welcome ${name}!! <a href="list-todos">Click here</a>Click here to manage your todo's.
-</body>
+</div>
 
-</html>
+<%@ include file="common/footer.jspf"%>

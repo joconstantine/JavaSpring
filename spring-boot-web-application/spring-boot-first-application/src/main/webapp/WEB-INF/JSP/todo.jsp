@@ -1,29 +1,24 @@
-<html>
+<%@ include file="common/header.jspf"%>
+<%@ include file="common/navigation.jspf"%>
 
-<head>
-<title>First Web Application</title>
-</head>
+<div class="container">
+	Add Todo Page for ${name }
+	<form:form method="post" modelAttribute="todo">
+		<form:hidden path="id" />
+		<fieldset class="form-group">
+			<form:label path="desc">Description</form:label>
+			<form:input path="desc" type="text" class="form-control"
+				required="required" />
+			<form:errors path="desc" cssClass="text-warning"></form:errors>
+		</fieldset>
+		<fieldset class="form-group">
+			<form:label path="targetDate">Target Date</form:label>
+			<form:input path="targetDate" type="text" class="form-control"
+				required="required" />
+			<form:errors path="targetDate" cssClass="text-warning"></form:errors>
+		</fieldset>
+		<button type="submit" class="btn btn-success">Submit Query</button>
+	</form:form>
+</div>
 
-<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
-	    		rel="stylesheet">
-	    		
-<body>
-	<div class="container">
-		Add Todo Page for ${name }
-		
-		<form method="post">
-			<fieldset class="form-group">
-				<label>Description</label>
-				<input name="desc" type="text" 
-					class="form-control" required="required"/>
-			</fieldset>
-			
-			<button type="submit" class="btn btn-success">Submit Query</button>
-		</form>
-	</div>
-	
-	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
-	<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+<%@ include file="common/footer.jspf"%>
