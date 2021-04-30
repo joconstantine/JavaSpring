@@ -44,6 +44,29 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<sources>
+						<source>${basedir}/src/main/resources/xsd</source>
+					</sources>
+					<outputDirectory>${basedir}/src/main/java</outputDirectory>
+					<clearOutputDir>false</clearOutputDir>
+				</configuration>
+			</plugin>
+			<!-- JAXB2 Maven Plugin -->
+			<!-- XSD Source Folder -->
+			<!-- Java Class Source Folder -->
+			<!-- clear folder -> false -->
 		</plugins>
 	</build>
 
