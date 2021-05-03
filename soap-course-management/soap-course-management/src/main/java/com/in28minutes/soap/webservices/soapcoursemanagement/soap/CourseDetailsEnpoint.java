@@ -1,4 +1,4 @@
-package com.in28minutes.courses.soap;
+package com.in28minutes.soap.webservices.soapcoursemanagement.soap;
 
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -13,7 +13,7 @@ import com.in28minutes.courses.GetCourseDetailsResponse;
 public class CourseDetailsEnpoint {
 	
 	@PayloadRoot(namespace = "http://in28Minutes.com/courses",
-			localPart = "GetCourseDetails")
+			localPart = "GetCourseDetailsRequest")
 	@ResponsePayload
 	public GetCourseDetailsResponse processCourseDetailsRequest
 	(@RequestPayload GetCourseDetailsRequest request) {
