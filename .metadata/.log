@@ -1,0 +1,46 @@
+!SESSION 2021-05-18 17:52:20.216 -----------------------------------------------
+eclipse.buildId=4.19.0.I20210303-1800
+java.version=13.0.1
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.jface 2 0 2021-05-18 17:52:39.266
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2021-05-18 17:52:39.266
+!MESSAGE A conflict occurred for CTRL+SHIFT+T:
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.navigate.open.type,Open Type,
+		Open a type in a Java editor,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@350342e0,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(CTRL+SHIFT+T,
+	ParameterizedCommand(Command(org.eclipse.lsp4e.symbolinworkspace,Go to Symbol in Workspace,
+		,
+		Category(org.eclipse.lsp4e.category,Language Servers,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5d297d4d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-18 17:52:45.869
+!MESSAGE System property http.proxyHost is not set but should be proxy.ncs.com.sg.
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-18 17:52:45.869
+!MESSAGE System property http.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-18 17:52:45.869
+!MESSAGE System property https.proxyHost is not set but should be proxy.ncs.com.sg.
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-18 17:52:45.869
+!MESSAGE System property https.proxyPort is not set but should be 8080.
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-18 17:52:45.901
+!MESSAGE System property https.proxyHost is not set but should be proxy.ncs.com.sg.
+
+!ENTRY org.eclipse.core.net 1 0 2021-05-18 17:52:45.901
+!MESSAGE System property https.proxyPort is not set but should be 8080.
