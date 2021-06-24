@@ -26,11 +26,9 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
-//@NoArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class BeerOrderLineDto extends BaseItem {
-
-    public BeerOrderLineDto() {}
 
     @Builder
     public BeerOrderLineDto(UUID id, Integer version, OffsetDateTime createdDate, OffsetDateTime lastModifiedDate,
