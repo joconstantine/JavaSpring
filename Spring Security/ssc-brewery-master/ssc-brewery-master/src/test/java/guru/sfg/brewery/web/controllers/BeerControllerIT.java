@@ -25,39 +25,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by jt on 6/12/20.
  */
 @WebMvcTest
-public class BeerControllerIT {
+public class BeerControllerIT extends BaseIT {
 
-    @Autowired
-    WebApplicationContext wac;
-
-    MockMvc mockMvc;
-
-    @MockBean
-    BeerRepository beerRepository;
-
-    @MockBean
-    BeerInventoryRepository beerInventoryRepository;
-
-    @MockBean
-    BreweryService breweryService;
-
-    @MockBean
-    CustomerRepository customerRepository;
-
-    @MockBean
-    BeerService beerService;
-
-    @BeforeEach
-    void setUp() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(wac)
-                .apply(springSecurity())
-                .build();
+   @Test
+    void initCreationForm() throws Exception {
+        mockMvc.perform(get("/beers/new").with(httpBasic("user", "password")))
+                .andExpect(status().isOk())
+                .andExpect(view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
     }
 
-    @WithMockUser("spring")
     @Test
-    void findBeers() throws Exception{
+    void initCreationFormForCustomer() throws Exception {
+        mockMvc.perform(get("/beers/new").with(httpBasic("scott", "tiger")))
+                .andExpect(status().isOk())
+                .andExpect(view().name("beers/createBeer"))
+                .andExpect(model().attributeExists("beer"));
+    }
+
+    @Test
+    void findBeers() throws Exception {
         mockMvc.perform(get("/beers/find"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("beers/findBeers"))
@@ -65,11 +52,10 @@ public class BeerControllerIT {
     }
 
     @Test
-    void findBeersWithHttpBasic() throws Exception{
+    void findBeersWithAnonymous() throws Exception {
         mockMvc.perform(get("/beers/find").with(anonymous()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("beers/findBeers"))
                 .andExpect(model().attributeExists("beer"));
     }
-
 }
