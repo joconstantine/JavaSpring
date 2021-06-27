@@ -131,6 +131,7 @@ public class BeerServiceImpl implements BeerService {
 
     @Override
     public void deleteById(UUID beerId) {
+        System.out.print(beerId);
         beerRepository.deleteById(beerId);
     }
 
