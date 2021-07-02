@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -19,6 +20,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    // needed for use with Spring Data JPA SPeL
+    @Bean
+    public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
+        return new SecurityEvaluationContextExtension();
+    }
 
     public RestHeaderAuthFilter restHeaderAuthFilter(AuthenticationManager authenticationManager) {
         RestHeaderAuthFilter filter = new RestHeaderAuthFilter(new AntPathRequestMatcher("/api/**"));
@@ -44,8 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // Add RestHeaderAuthFilter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(restHeaderAuthFilter(authenticationManager()),
-                UsernamePasswordAuthenticationFilter.class)
-                .csrf().disable();
+                UsernamePasswordAuthenticationFilter.class);
 
         http.addFilterBefore(restUrlAuthFilter(authenticationManager()),
                 UsernamePasswordAuthenticationFilter.class);
@@ -59,7 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .authorizeRequests((requests) -> requests.anyRequest().authenticated());
         http.formLogin();
-        http.httpBasic();
+        http.httpBasic()
+            .and().csrf().ignoringAntMatchers("/h2-console/**","/api/**");
 
         // h2 console config
         http.headers().frameOptions().sameOrigin();

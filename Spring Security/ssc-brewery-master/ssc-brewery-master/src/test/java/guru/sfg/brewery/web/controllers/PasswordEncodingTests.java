@@ -14,7 +14,6 @@ public class PasswordEncodingTests {
 
     static final String PASSWORD = "password";
 
-    @Test
     void testBCrypt15() {
         PasswordEncoder bcrypt = new BCryptPasswordEncoder(15);
 
