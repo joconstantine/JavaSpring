@@ -77,8 +77,6 @@ public abstract class AbstractRestAuthFilter extends AbstractAuthenticationProce
             password = null;
         }
 
-        log.debug("Authenticating User: " + userName);
-
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userName, password);
 
         if (StringUtils.hasText(userName)) {
