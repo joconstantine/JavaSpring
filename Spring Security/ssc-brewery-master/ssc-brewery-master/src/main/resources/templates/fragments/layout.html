@@ -1,5 +1,7 @@
 <!doctype html>
-<html th:fragment="layout (template, menu)">
+<html th:fragment="layout (template, menu)"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 
 <head>
 
@@ -49,19 +51,27 @@
                     <span>Home</span>
                 </li>
 
-                <li th:replace="::menuItem ('/customers/find','customers','find customers','search','Customers')">
+                <li sec:authorize="hasAuthority('customer.read')"
+                        th:replace="::menuItem ('/customers/find','customers','find customers','search','Customers')">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Find Customer</span>
                 </li>
 
-                <li th:replace="::menuItem ('/beers/find','beers','find beers','search','Find beers')">
+                <li sec:authorize="hasAuthority('beer.read')"
+                        th:replace="::menuItem ('/beers/find','beers','find beers','search','Find beers')">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     <span>Find Beer</span>
                 </li>
 
-                <li th:replace="::menuItem ('/brewery/breweries','breweries','breweries','th-list','Breweries')">
+                <li sec:authorize="hasAuthority('brewery.read')"
+                        th:replace="::menuItem ('/brewery/breweries','breweries','breweries','th-list','Breweries')">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Breweries</span>
+                </li>
+
+                <li th:replace="::menuItem ('/user/register2fa','user','register','th-list','Enable 2FA')">
+                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                    <span>Enable 2FA</span>
                 </li>
 
             </ul>

@@ -33,6 +33,15 @@ public class User implements UserDetails, CredentialsContainer {
     @Builder.Default
     private boolean enabled = true;
 
+    @Builder.Default
+    private Boolean useGoogle2fa = false;
+
+    private String google2faSecret;
+
+    @Transient
+    @Builder.Default
+    private Boolean google2faRequired = true;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -60,6 +69,7 @@ public class User implements UserDetails, CredentialsContainer {
                 })
                 .collect(Collectors.toSet());
     }
+
 
     @Override
     public void eraseCredentials() {
