@@ -1,20 +1,17 @@
-package com.photoapp.discovery.api.users.shared;
+package com.photoapp.discovery.api.users.ui.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
+public class CreateUserResponseModel {
 	
 	private String firstName;
 	private String lastName;
-	private String password;
 	private String email;
 	private String userId;
-	private String encryptedPassword;
+
 }

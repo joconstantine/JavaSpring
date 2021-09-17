@@ -1,6 +1,7 @@
 package com.dailycodebuffer.reactiveprogramming.services;
 
 import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Hooks;
 import reactor.test.StepVerifier;
 
 class FluxAndMonoServicesTest {
@@ -240,6 +241,7 @@ class FluxAndMonoServicesTest {
 
     @Test
     void fruitsFluxOnErrorMap() {
+//        Hooks.onOperatorDebug();
         var fruitsFluxFilter = fluxAndMonoServices.fruitsFluxOnErrorMap().log();
 
         StepVerifier.create(fruitsFluxFilter)
