@@ -1,5 +1,9 @@
 package com.photoapp.discovery.api.users.shared;
 
+import java.util.List;
+
+import com.photoapp.discovery.api.users.ui.model.AlbumResponseModel;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -17,4 +21,5 @@ public class UserDto {
 	private String email;
 	private String userId;
 	private String encryptedPassword;
+	private List<AlbumResponseModel> albums;
 }
